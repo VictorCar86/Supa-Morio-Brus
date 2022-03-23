@@ -1,21 +1,4 @@
-/*
-document.addEventListener("keyup", sas);
-
-const llamar = () => {
-    return new Promise((resolve, reject) => { (true) 
-        ? setTimeout(() => resolve(dibujarCanvas("red", 100, 40, 100, 600)), 3000)
-        : reject(new Error ("Test Error"));
-    })
-}
-const async_test = async() =>{
-    const hello = await llamar();
-}
-
-async_test(); */
-
-
 // Canvas
-
 const canvas = document.getElementById("canvas");
 const canvas_2d = canvas.getContext("2d");
 
@@ -30,7 +13,6 @@ fondo_background.objeto.addEventListener("load", cargarFondoBack);
 
 function cargarFondoBack(){
     fondo_background.cargado = true;
-    ejecutarJuego()
 }
 
 let suelo = {
@@ -44,7 +26,6 @@ suelo.objeto.addEventListener("load", cargarSuelo);
 
 function cargarSuelo(){
     suelo.cargado = true;
-    ejecutarJuego();
 }
 
 let nube_1 = {
@@ -58,7 +39,6 @@ nube_1.objeto.addEventListener("load", cargarNube1);
 
 function cargarNube1(){
     nube_1.cargado = true;
-    ejecutarJuego();
 }
 
 let nube_2 = {
@@ -72,7 +52,6 @@ nube_2.objeto.addEventListener("load", cargarNube2);
 
 function cargarNube2(){
     nube_2.cargado = true;
-    ejecutarJuego();
 }
 
 let titulo = {
@@ -86,9 +65,21 @@ titulo.objeto.addEventListener("load", cargarTitulo);
 
 function cargarTitulo(){
     titulo.cargado = true;
-    ejecutarJuego();
 }
 
+let press_start = {
+    cargado: false,
+    url: "assets/press_start.png"
+}
+
+press_start.objeto = new Image();
+press_start.objeto.src = press_start.url;
+press_start.objeto.addEventListener("load", cargarPress);
+
+function cargarPress(){
+    press_start.cargado = true;
+    executeStart()
+}
 
 // Main
 
@@ -96,11 +87,12 @@ function esperar(miliseconds){
     return new Promise(resolve => {setTimeout(resolve, miliseconds)});
 }
 
-function ejecutarJuego(){
-    if(fondo_background.cargado){
-        canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
-    }
-    if (nube_1.cargado){
+function executeStart(){
+    if (fondo_background.cargado &&
+        nube_1.cargado &&
+        nube_2.cargado &&
+        titulo.cargado &&
+        suelo.cargado){
         const process = async () => {
             let nube_1_x = 400;
             const nube_1_y = -30;
@@ -110,13 +102,29 @@ function ejecutarJuego(){
             const titulo_y = 100;
             const suelo_x = 0;
             const suelo_y = 750; // 763
-            for (i = 0; i < 10; i++){
+            const press_start_x = 480;
+            const press_start_y = 500;
+            for (i = 0; i < 60; i++){
+                // Draw image
                 await esperar(30)
-                canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
-                canvas_2d.drawImage(nube_1.objeto, nube_1_x, nube_1_y, 500, 370);
-                canvas_2d.drawImage(nube_2.objeto, nube_2_x, nube_2_y, 200, 160);
-                canvas_2d.drawImage(titulo.objeto, titulo_x, titulo_y, 566, 307);
-                canvas_2d.drawImage(suelo.objeto, suelo_x, suelo_y, 1200, 50);
+                if (fondo_background.cargado){
+                    canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
+                }
+                if (nube_1.cargado){
+                    canvas_2d.drawImage(nube_1.objeto, nube_1_x, nube_1_y, 500, 370);
+                }
+                if (nube_2.cargado){
+                    canvas_2d.drawImage(nube_2.objeto, nube_2_x, nube_2_y, 200, 160);
+                }
+                if (titulo.cargado){
+                    canvas_2d.drawImage(titulo.objeto, titulo_x, titulo_y, 566, 307);
+                }
+                if (suelo.cargado){
+                    canvas_2d.drawImage(suelo.objeto, suelo_x, suelo_y, 1200, 50);
+                }
+                
+                // Movement
+                if (i === 59){i = 0}
                 nube_1_x = nube_1_x - 1;
                 nube_2_x = nube_2_x - 2;
                 if (nube_1_x === -450){
@@ -125,9 +133,17 @@ function ejecutarJuego(){
                 if (nube_2_x === -290){
                     nube_2_x = 1200
                 }
-                if (i === 9){i = 0}
+                if (i < 30){
+                    canvas_2d.drawImage(press_start.objeto, press_start_x, press_start_y, 230, 27);
+                }
             }
         }
         process();
+        document.addEventListener("keyup", firstStart);
+        function firstStart(event){
+        if (event.keyCode === 13){
+            console.log("SOS")
+            }
+        }
     }
 }
