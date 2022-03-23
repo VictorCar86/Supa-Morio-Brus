@@ -33,6 +33,20 @@ function cargarFondoBack(){
     ejecutarJuego()
 }
 
+let suelo = {
+    cargado: false,
+    url: "assets/suelo.png"
+}
+
+suelo.objeto = new Image();
+suelo.objeto.src = suelo.url;
+suelo.objeto.addEventListener("load", cargarSuelo);
+
+function cargarSuelo(){
+    suelo.cargado = true;
+    ejecutarJuego();
+}
+
 let nube_1 = {
     cargado: false,
     url: "assets/nube_1.png"
@@ -94,12 +108,15 @@ function ejecutarJuego(){
             const nube_2_y = 180;
             const titulo_x = 300;
             const titulo_y = 100;
+            const suelo_x = 0;
+            const suelo_y = 750; // 763
             for (i = 0; i < 10; i++){
                 await esperar(30)
                 canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
                 canvas_2d.drawImage(nube_1.objeto, nube_1_x, nube_1_y, 500, 370);
                 canvas_2d.drawImage(nube_2.objeto, nube_2_x, nube_2_y, 200, 160);
                 canvas_2d.drawImage(titulo.objeto, titulo_x, titulo_y, 566, 307);
+                canvas_2d.drawImage(suelo.objeto, suelo_x, suelo_y, 1200, 50);
                 nube_1_x = nube_1_x - 1;
                 nube_2_x = nube_2_x - 2;
                 if (nube_1_x === -450){
