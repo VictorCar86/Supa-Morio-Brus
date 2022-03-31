@@ -16,6 +16,19 @@ function cargarFondoBack(){
     fondo_background.cargado = true;
 }
 
+let black_screen = {
+    cargado: false,
+    url: "assets/black_screen.jpg"
+}
+
+black_screen.objeto = new Image();
+black_screen.objeto.src = black_screen.url;
+black_screen.objeto.addEventListener("load", cargarBlackScreen);
+
+function cargarBlackScreen(){
+    black_screen.cargado = true;
+}
+
 let suelo = {
     cargado: false,
     url: "assets/ground.png"
@@ -159,6 +172,19 @@ function cargarMorio_stand(){
     morio_stand.cargado = true;
 }
 
+let morio_frame1 = {
+    cargado: false,
+    url: "assets/morio_frame1.png"
+}
+
+morio_frame1.objeto = new Image();
+morio_frame1.objeto.src = morio_frame1.url;
+morio_frame1.objeto.addEventListener("load", cargarMorio_frame1);
+
+function cargarMorio_frame1(){
+    morio_frame1.cargado = true;
+}
+
 let morio_frame2 = {
     cargado: false,
     url: "assets/morio_frame2.png"
@@ -170,6 +196,19 @@ morio_frame2.objeto.addEventListener("load", cargarMorio_frame2);
 
 function cargarMorio_frame2(){
     morio_frame2.cargado = true;
+}
+
+let morio_frame3 = {
+    cargado: false,
+    url: "assets/morio_frame3.png"
+}
+
+morio_frame3.objeto = new Image();
+morio_frame3.objeto.src = morio_frame3.url;
+morio_frame3.objeto.addEventListener("load", cargarMorio_frame3);
+
+function cargarMorio_frame3(){
+    morio_frame3.cargado = true;
     executeStart()
 }
 
@@ -266,17 +305,31 @@ function startMainGame(event){
 const keys = {
     LEFT: 37,
     RIGHT: 39
-  };
+};
 
 function mainGame(){
     const gameProcess = async () => {
         await esperar(30)
+        if (black_screen.cargado){
+            canvas_2d.drawImage(black_screen.objeto, 0, 0, 1200, 800);
+        }
+        if (x_signal.cargado){
+            canvas_2d.drawImage(x_signal.objeto, 580, 375, 15, 15);
+        }
+        if (morio_face.cargado){
+            canvas_2d.drawImage(morio_face.objeto, 500, 350, 65, 60);
+        }
+        if (zero.cargado){
+            canvas_2d.drawImage(zero.objeto, 610, 367, 30, 30);
+        }
+        await esperar(3000)
         let nube_1_x = 300;
         const nube_1_y = -30;
         let nube_2_x = 900;
         const nube_2_y = 100;
         let nube_3_x = 170;
         const nube_3_y = 190;
+        let morio_x = 300;
         for (i = 0; i < 60; i++){
             await esperar(30)
             if (fondo_background.cargado){
@@ -304,8 +357,10 @@ function mainGame(){
                 canvas_2d.drawImage(x_signal.objeto, 180, 73, 15, 15);
             }
             if (zero.cargado){
-                canvas_2d.drawImage(zero.objeto, 620, 63, 30, 30);
+                /* Zero Morio */
                 canvas_2d.drawImage(zero.objeto, 210, 65, 30, 30);
+                /* Zero Coin */
+                canvas_2d.drawImage(zero.objeto, 620, 63, 30, 30);
             }
             if (morio_face.cargado){
                 canvas_2d.drawImage(morio_face.objeto, 100, 50, 65, 60);
@@ -326,20 +381,45 @@ function mainGame(){
                 nube_3_x = 1200
             }
             // Morio Movement
-            let morio_x = 300;
+            if (i === 0){
+                document.addEventListener("keydown", moveMorio);
+            }
             if (morio_stand.cargado){
                 if (start){
                     canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);
                 }
             }
-            document.addEventListener("keydown", moveMorio);
-            function moveMorio(event){
+            
+            async function moveMorio(event){
                 switch (event.keyCode){
                     case keys.RIGHT:
-                        start = false;
-                        canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
-                        morio_x = morio_x + 10;
-                        start = true;
+                        canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
+                        canvas_2d.drawImage(nube_1.objeto, nube_1_x, nube_1_y, 500, 370);
+                        canvas_2d.drawImage(nube_2.objeto, nube_2_x, nube_2_y, 200, 160);
+                        canvas_2d.drawImage(nube_3.objeto, nube_3_x, nube_3_y, 280, 140);
+                        canvas_2d.drawImage(coin.objeto, 510, 45, 70, 70);
+                        /* Cross Coin */
+                        canvas_2d.drawImage(x_signal.objeto, 590, 70, 15, 15);
+                        /* Cross Morio */
+                        canvas_2d.drawImage(x_signal.objeto, 180, 73, 15, 15);
+                        /* Zero Morio */
+                        canvas_2d.drawImage(zero.objeto, 210, 65, 30, 30);
+                        /* Zero Coin */
+                        canvas_2d.drawImage(zero.objeto, 620, 63, 30, 30);
+                        canvas_2d.drawImage(morio_face.objeto, 100, 50, 65, 60);
+                        canvas_2d.drawImage(suelo.objeto, 0, 750, 1200, 50);
+                        if (morio_frame2.cargado){
+                            await esperar(100)
+                            canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
+                            morio_x = morio_x + 10;
+                            await esperar(100)
+                            canvas_2d.drawImage(morio_frame1.objeto, morio_x, 610, 85, 140);
+                            morio_x = morio_x + 10;
+                            await esperar(100)
+                            canvas_2d.drawImage(morio_frame3.objeto, morio_x, 610, 85, 140);
+                            morio_x = morio_x + 10;
+                        }
+                        console.log(morio_x);
                     break;
                 }
             }
