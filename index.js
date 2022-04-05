@@ -330,7 +330,11 @@ function mainGame(){
         let nube_3_x = 170;
         const nube_3_y = 190;
         let morio_x = 300;
+<<<<<<< HEAD
         for (i = 0; i < 10000; i++){
+=======
+        for (i = 0; i < 200; i++){
+>>>>>>> 8f5d7c83ad81e0738fbb98945681a6280ae94e35
             await esperar(30)
             if (fondo_background.cargado){
                 canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
@@ -366,8 +370,12 @@ function mainGame(){
                 canvas_2d.drawImage(morio_face.objeto, 100, 50, 65, 60);
             }
             // General Movement
+<<<<<<< HEAD
             if (i === 9999){i = 0}
             let start = true;
+=======
+            if (i === 199){i = 0}
+>>>>>>> 8f5d7c83ad81e0738fbb98945681a6280ae94e35
             nube_1_x = nube_1_x - 0.5;
             nube_2_x = nube_2_x - 2;
             nube_3_x = nube_3_x - 1;
@@ -381,18 +389,18 @@ function mainGame(){
                 nube_3_x = 1200
             }
             // Morio Movement
-            if (i === 0){
+            if (i === 1){
                 document.addEventListener("keydown", moveMorio);
             }
+            let momento = canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);;
             if (morio_stand.cargado){
-                if (start){
-                    canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);
-                }
+                momento;
             }
             
             async function moveMorio(event){
                 switch (event.keyCode){
                     case keys.RIGHT:
+<<<<<<< HEAD
                         canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);
                         await esperar(100)
                         canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
@@ -403,6 +411,33 @@ function mainGame(){
                         await esperar(100)
                         canvas_2d.drawImage(morio_frame3.objeto, morio_x, 610, 85, 140);
                         morio_x = morio_x + 10;
+=======
+                        canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
+                        canvas_2d.drawImage(nube_1.objeto, nube_1_x, nube_1_y, 500, 370);
+                        canvas_2d.drawImage(nube_2.objeto, nube_2_x, nube_2_y, 200, 160);
+                        canvas_2d.drawImage(nube_3.objeto, nube_3_x, nube_3_y, 280, 140);
+                        canvas_2d.drawImage(coin.objeto, 510, 45, 70, 70);
+                        /* Cross Coin */
+                        canvas_2d.drawImage(x_signal.objeto, 590, 70, 15, 15);
+                        /* Cross Morio */
+                        canvas_2d.drawImage(x_signal.objeto, 180, 73, 15, 15);
+                        /* Zero Morio */
+                        canvas_2d.drawImage(zero.objeto, 210, 65, 30, 30);
+                        /* Zero Coin */
+                        canvas_2d.drawImage(zero.objeto, 620, 63, 30, 30);
+                        canvas_2d.drawImage(morio_face.objeto, 100, 50, 65, 60);
+                        canvas_2d.drawImage(suelo.objeto, 0, 750, 1200, 50);
+                        if (morio_frame2.cargado){
+                            momento = canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
+                            morio_x = morio_x + 5;
+                            momento = canvas_2d.drawImage(morio_frame1.objeto, morio_x, 610, 106, 140);
+                            morio_x = morio_x + 10;
+                            momento = canvas_2d.drawImage(morio_frame3.objeto, morio_x, 610, 128, 140);
+                            morio_x = morio_x + 10;
+                            momento = canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
+                            morio_x = morio_x + 10;
+                        }
+>>>>>>> 8f5d7c83ad81e0738fbb98945681a6280ae94e35
                         console.log(morio_x);
                     break;
                 }
