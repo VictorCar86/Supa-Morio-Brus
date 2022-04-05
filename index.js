@@ -391,9 +391,9 @@ function mainGame(){
             }
             
             async function moveMorio(event){
+                start= false;
                 switch (event.keyCode){
                     case keys.RIGHT:
-                        canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);
                         await esperar(100)
                         canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
                         morio_x = morio_x + 10;
@@ -406,6 +406,7 @@ function mainGame(){
                         console.log(morio_x);
                     break;
                 }
+                start = true;
             }
         }
     }
