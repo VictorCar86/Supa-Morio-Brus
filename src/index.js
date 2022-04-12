@@ -212,7 +212,7 @@ function cargarMorio_frame3(){
     executeStart()
 }
 
-// Main
+// Main Title
 
 function esperar(miliseconds){
     return new Promise(resolve => {setTimeout(resolve, miliseconds)});
@@ -266,7 +266,7 @@ function executeStart(){
             if (morio_stand.cargado){
                 canvas_2d.drawImage(morio_stand.objeto, 300, 610, 85, 140);
             }
-    
+
             // Movement
             if (i === 59){i = 0}
             nube_1_x = nube_1_x - 0.5;
@@ -295,10 +295,15 @@ function executeStart(){
     process();
 }
 
+// Main Game
+
 document.addEventListener("keydown", startMainGame);
+let enable_main_game = true;
 function startMainGame(event){
-    if (event.keyCode === 13){
+    if (event.keyCode === 13 && enable_main_game){
         mainGame();
+        enable_main_game = false
+        console.log(enable_main_game);
     }
 }
 
@@ -367,7 +372,6 @@ function mainGame(){
             }
             // General Movement
             if (i === 9999){i = 0}
-            let start = true;
             nube_1_x = nube_1_x - 0.5;
             nube_2_x = nube_2_x - 2;
             nube_3_x = nube_3_x - 1;
@@ -384,28 +388,75 @@ function mainGame(){
             if (i === 1){
                 document.addEventListener("keydown", moveMorio);
             }
+<<<<<<< HEAD:index.js
             let momento = canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);;
             if (morio_stand.cargado){
                 momento;
+=======
+            let run_mario_stand = true;
+            let run_frame_1 = false;
+            let run_frame_2 = false;
+            let run_frame_3 = false;
+            if (morio_stand.cargado){
+                if (run_mario_stand){
+                    canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);
+                }
+>>>>>>> dev:src/index.js
             }
-            
+            if (run_frame_2){
+                canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 88, 140);
+            }
+            if (run_frame_1){
+                canvas_2d.drawImage(morio_frame1.objeto, morio_x, 610, 110, 140);
+            }
+            if (run_frame_3){
+                canvas_2d.drawImage(morio_frame3.objeto, morio_x, 610, 117, 140);
+            }
+/*
+            canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 88, 140);
+            morio_x = morio_x + 2;
+            await esperar(200)
+            console.log(morio_x + " +2")
+            canvas_2d.drawImage(morio_frame1.objeto, morio_x, 610, 110, 140);
+            morio_x = morio_x + 30;
+            await esperar(200)
+            console.log(morio_x + " +30")
+            canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 88, 140);
+            morio_x = morio_x - 10;
+            await esperar(200)
+            console.log(morio_x + " -10")
+            canvas_2d.drawImage(morio_frame3.objeto, morio_x, 610, 117, 140);
+            morio_x = morio_x + 35;
+            await esperar(200)
+            console.log(morio_x + " +35")
+*/
             async function moveMorio(event){
-                start= false;
+                run_mario_stand= false;
                 switch (event.keyCode){
                     case keys.RIGHT:
-                        await esperar(100)
-                        canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 85, 140);
-                        morio_x = morio_x + 10;
-                        await esperar(100)
-                        canvas_2d.drawImage(morio_frame1.objeto, morio_x, 610, 85, 140);
-                        morio_x = morio_x + 10;
-                        await esperar(100)
-                        canvas_2d.drawImage(morio_frame3.objeto, morio_x, 610, 85, 140);
-                        morio_x = morio_x + 10;
-                        console.log(morio_x);
+                        run_frame_2 = true
+                        await esperar(400)
+                        morio_x = morio_x + 2;
+                        run_frame_2 = false
+                        console.log(morio_x + " +2")
+                        run_frame_1 = true
+                        await esperar(400)
+                        morio_x = morio_x + 30;
+                        run_frame_1 = false;
+                        console.log(morio_x + " +30")
+                        run_frame_2 = true;
+                        await esperar(400)
+                        morio_x = morio_x - 10;
+                        run_frame_2 = false
+                        console.log(morio_x + " -10")
+                        run_frame_3 = true;
+                        await esperar(400)
+                        morio_x = morio_x + 35;
+                        run_frame_3 = false;
+                        console.log(morio_x + " +35")
                     break;
                 }
-                start = true;
+                run_mario_stand = true;
             }
         }
     }
