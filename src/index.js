@@ -388,11 +388,6 @@ function mainGame(){
             if (i === 1){
                 document.addEventListener("keydown", moveMorio);
             }
-<<<<<<< HEAD:index.js
-            let momento = canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);;
-            if (morio_stand.cargado){
-                momento;
-=======
             let run_mario_stand = true;
             let run_frame_1 = false;
             let run_frame_2 = false;
@@ -401,7 +396,6 @@ function mainGame(){
                 if (run_mario_stand){
                     canvas_2d.drawImage(morio_stand.objeto, morio_x, 610, 85, 140);
                 }
->>>>>>> dev:src/index.js
             }
             if (run_frame_2){
                 canvas_2d.drawImage(morio_frame2.objeto, morio_x, 610, 88, 140);
