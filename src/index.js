@@ -498,22 +498,22 @@ function mainGame(){
                             run_mario_stand_right = false;
                             run_mario_stand_left = false;
                             run_frame_2_right = true;
-                            await esperar(120)
+                            await esperar(100)
                             morio_x = morio_x + 4;
                             run_frame_2_right = false
                             console.log(morio_x + " +4")
                             run_frame_1_right = true;
-                            await esperar(120)
+                            await esperar(100)
                             morio_x = morio_x + 35;
                             run_frame_1_right = false;
                             console.log(morio_x + " +35")
                             run_frame_2_right = true;
-                            await esperar(120)
+                            await esperar(100)
                             morio_x = morio_x - 10;
                             run_frame_2_right = false
                             console.log(morio_x + " -10")
                             run_frame_3_right = true;
-                            await esperar(120)
+                            await esperar(100)
                             morio_x = morio_x + 40;
                             run_frame_3_right = false;
                             console.log(morio_x + " +40")
@@ -527,32 +527,31 @@ function mainGame(){
             async function moveMorioLeft(event){
                 if (mario_avaliable_walk && event.keyCode == keys.LEFT){
                     mario_avaliable_walk = false;
-                    console.log("a")
                     switch (event.keyCode){
                         case keys.LEFT:
                             move_left = false;
                             run_mario_stand_right = false;
                             run_mario_stand_left = false;
                             run_frame_2_left = true;
-                            await esperar(120)
+                            await esperar(100)
                             morio_x = morio_x - 4;
                             run_frame_2_left = false;
                             console.log(morio_x + " -4")
                             run_frame_1_left = true;
-                            await esperar(120)
+                            await esperar(100)
                             morio_x = morio_x - 35;
                             run_frame_1_left = false;
-                            console.log(morio_x + " -35")
+                            console.log(morio_x + " -30")
                             run_frame_2_left = true;
-                            await esperar(120)
-                            morio_x = morio_x + 3;
+                            await esperar(100)
+                            morio_x = morio_x - 15;
                             run_frame_2_left = false;
-                            console.log(morio_x + " +3")
+                            console.log(morio_x + " -15")
                             run_frame_3_left = true;
-                            await esperar(120)
-                            morio_x = morio_x - 40;
+                            await esperar(100)
+                            morio_x = morio_x - 20;
                             run_frame_3_left = false;
-                            console.log(morio_x + " -40")
+                            console.log(morio_x + " -20")
                             move_left = true;
                         break;
                     }
