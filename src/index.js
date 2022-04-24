@@ -387,20 +387,25 @@ function mainGame(){
         let nube_3_x = 170;
         const nube_3_y = 190;
         // Morio Variables
-        let mario_avaliable_walk = true;
-        let morio_x = 300;
-        let run_mario_stand_right = true;
-        let run_mario_stand_left = false;
-        let run_frame_1_right = false;
-        let run_frame_2_right = false;
-        let run_frame_3_right = false;
-        let run_frame_1_left = false;
-        let run_frame_2_left = false;
-        let run_frame_3_left = false;
-        let move_right = true;
-        let move_left = true;
+        let morio = {
+            x_position: 300,
+            avaliable_walk: true,
+            stand_left: false,
+            stand_right: true,
+            frame1_right: false,
+            frame2_right: false,
+            frame3_right: false,
+            frame1_left: false,
+            frame2_left: false,
+            frame3_left: false
+        }
+        // General Movement
         for (i = 0; i < 10000; i++){
             await esperar(30)
+            document.addEventListener("keydown", moveMorioRight);
+            // document.addEventListener("keyup", unmoveMorioRight);
+            document.addEventListener("keydown", moveMorioLeft);
+            // document.addEventListener("keyup", unmoveMorioLeft);
             if (fondo_background.cargado){
                 canvas_2d.drawImage(fondo_background.objeto, 0, 0, 1200, 800);
             }
@@ -430,7 +435,6 @@ function mainGame(){
             if (morio_face.cargado){
                 canvas_2d.drawImage(morio_face.objeto, 100, 50, 65, 60);
             }
-            // General Movement
             if (i === 9999){i = 0}
             nube_1_x = nube_1_x - 0.5;
             nube_2_x = nube_2_x - 2;
@@ -445,118 +449,110 @@ function mainGame(){
                 nube_3_x = 1200
             }
             // Morio Movement
-            if (i === 0){
-                document.addEventListener("keydown", moveMorioRight);
-                document.addEventListener("keydown", moveMorioLeft);
-            }
             if (morio_stand_right.cargado){
-                if (run_mario_stand_right){
-                    canvas_2d.drawImage(morio_stand_right.objeto, morio_x, 610, 88, 140);
+                if (morio.stand_right){
+                    canvas_2d.drawImage(morio_stand_right.objeto, morio.x_position, 610, 88, 140);
                 }
             }
             if (morio_stand_left.cargado){
-                if (run_mario_stand_left){
-                    canvas_2d.drawImage(morio_stand_left.objeto, morio_x, 610, 88, 140);
+                if (morio.stand_left){
+                    canvas_2d.drawImage(morio_stand_left.objeto, morio.x_position, 610, 88, 140);
                 }
             }
             if (morio_frame1_right.cargado){
-                if (run_frame_1_right){
-                    canvas_2d.drawImage(morio_frame1_right.objeto, morio_x, 610, 110, 140);
+                if (morio.frame1_right){
+                    canvas_2d.drawImage(morio_frame1_right.objeto, morio.x_position, 610, 110, 140);
                 }
             }
             if (morio_frame2_right.cargado){
-                if (run_frame_2_right){
-                    canvas_2d.drawImage(morio_frame2_right.objeto, morio_x, 610, 88, 140);
+                if (morio.frame2_right){
+                    canvas_2d.drawImage(morio_frame2_right.objeto, morio.x_position, 610, 88, 140);
                 }
             }
             if (morio_frame3_right.cargado){
-                if (run_frame_3_right){
-                    canvas_2d.drawImage(morio_frame3_right.objeto, morio_x, 610, 117, 140);
+                if (morio.frame3_right){
+                    canvas_2d.drawImage(morio_frame3_right.objeto, morio.x_position, 610, 117, 140);
                 }
             }
             if (morio_frame1_left.cargado){
-                if (run_frame_1_left){
-                    canvas_2d.drawImage(morio_frame1_left.objeto, morio_x, 610, 110, 140);
+                if (morio.frame1_left){
+                    canvas_2d.drawImage(morio_frame1_left.objeto, morio.x_position, 610, 110, 140);
                 }
             }
             if (morio_frame2_left.cargado){
-                if (run_frame_2_left){
-                    canvas_2d.drawImage(morio_frame2_left.objeto, morio_x, 610, 88, 140);
+                if (morio.frame2_left){
+                    canvas_2d.drawImage(morio_frame2_left.objeto, morio.x_position, 610, 88, 140);
                 }
             }
             if (morio_frame3_left.cargado){
-                if (run_frame_3_left){
-                    canvas_2d.drawImage(morio_frame3_left.objeto, morio_x, 610, 117, 140);
+                if (morio.frame3_left){
+                    canvas_2d.drawImage(morio_frame3_left.objeto, morio.x_position, 610, 117, 140);
                 }
             }
             async function moveMorioRight(event){
-                if (mario_avaliable_walk && event.keyCode == keys.RIGHT){
-                    mario_avaliable_walk = false;
+                if (morio.avaliable_walk && event.keyCode == keys.RIGHT){
+                    morio.avaliable_walk = false;
                     switch (event.keyCode){
                         case keys.RIGHT:
-                            move_right = false;
-                            run_mario_stand_right = false;
-                            run_mario_stand_left = false;
-                            run_frame_2_right = true;
-                            await esperar(100)
-                            morio_x = morio_x + 4;
-                            run_frame_2_right = false
-                            console.log(morio_x + " +4")
-                            run_frame_1_right = true;
-                            await esperar(100)
-                            morio_x = morio_x + 35;
-                            run_frame_1_right = false;
-                            console.log(morio_x + " +35")
-                            run_frame_2_right = true;
-                            await esperar(100)
-                            morio_x = morio_x - 10;
-                            run_frame_2_right = false
-                            console.log(morio_x + " -10")
-                            run_frame_3_right = true;
-                            await esperar(100)
-                            morio_x = morio_x + 40;
-                            run_frame_3_right = false;
-                            console.log(morio_x + " +40")
-                            move_right = true;
+                            morio.stand_right = false;
+                            morio.stand_left = false;
+                            morio.frame2_right = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position + 4;
+                            morio.frame2_right = false
+                            console.log(morio.x_position + " +4")
+                            morio.frame1_right = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position + 35;
+                            morio.frame1_right = false;
+                            console.log(morio.x_position + " +35")
+                            morio.frame2_right = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position - 10;
+                            morio.frame2_right = false
+                            console.log(morio.x_position + " -10")
+                            morio.frame3_right = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position + 40;
+                            morio.frame3_right = false;
+                            console.log(morio.x_position + " +40")
                         break;
                     }
-                    run_mario_stand_right = true;
-                    mario_avaliable_walk = true;
+                    morio.stand_right = true;
+                    morio.avaliable_walk = true;
                 }
             }
             async function moveMorioLeft(event){
-                if (mario_avaliable_walk && event.keyCode == keys.LEFT){
-                    mario_avaliable_walk = false;
+                if (morio.avaliable_walk && event.keyCode == keys.LEFT){
+                    morio.avaliable_walk = false;
                     switch (event.keyCode){
                         case keys.LEFT:
-                            move_left = false;
-                            run_mario_stand_right = false;
-                            run_mario_stand_left = false;
-                            run_frame_2_left = true;
-                            await esperar(100)
-                            morio_x = morio_x - 4;
-                            run_frame_2_left = false;
-                            console.log(morio_x + " -4")
-                            run_frame_1_left = true;
-                            await esperar(100)
-                            morio_x = morio_x - 35;
-                            run_frame_1_left = false;
-                            console.log(morio_x + " -30")
-                            run_frame_2_left = true;
-                            await esperar(100)
-                            morio_x = morio_x - 15;
-                            run_frame_2_left = false;
-                            console.log(morio_x + " -15")
-                            run_frame_3_left = true;
-                            await esperar(100)
-                            morio_x = morio_x - 20;
-                            run_frame_3_left = false;
-                            console.log(morio_x + " -20")
-                            move_left = true;
+                            morio.stand_left = false;
+                            morio.stand_right = false;
+                            morio.frame2_left = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position - 4;
+                            morio.frame2_left = false;
+                            console.log(morio.x_position + " -4")
+                            morio.frame1_left = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position - 35;
+                            morio.frame1_left = false;
+                            console.log(morio.x_position + " -35")
+                            morio.frame2_left = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position - 15;
+                            morio.frame2_left = false;
+                            console.log(morio.x_position + " -15")
+                            morio.frame3_left = true;
+                            await esperar(90)
+                            morio.x_position = morio.x_position - 20;
+                            morio.frame3_left = false;
+                            console.log(morio.x_position + " -20")
                         break;
                     }
-                    run_mario_stand_left = true;
-                    mario_avaliable_walk = true;
+                    morio.stand_left = true;
+                    morio.avaliable_walk = true;
                 }
             }
         }
